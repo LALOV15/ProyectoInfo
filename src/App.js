@@ -1,11 +1,10 @@
-
-
-import OptionsMenu from './componets/OptionsMenu/OptionsMenu';
+import React from "react";
+import RoutesComponent from "./routes";
 
 const App = () => {
   return (
     <div>
-      <OptionsMenu/>
+      <RoutesComponent />
     </div>
   );
 };

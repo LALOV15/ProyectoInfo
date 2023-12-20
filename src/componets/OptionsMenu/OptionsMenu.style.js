@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Cart } from "@styled-icons/boxicons-solid/Cart";
 
 export const ContainerMenus = styled.div`
   display: flex;
@@ -11,24 +10,6 @@ export const ContainerMenus = styled.div`
   height: 100%;
   position: fixed;
   overflow: hidden;
-`;
-
-export const Navbar_Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(75, 165, 134);
-  color: #0d0d38;
-  padding: 10px 0 10px 0;
-  width: 100%;
-  height: 25px;
-  font-weight: 900;
-  position: static;
-`;
-
-export const LabelTitle = styled.label`
-  margin-left: 10px;
 `;
 
 export const ContainerCards = styled.div`
@@ -64,9 +45,3 @@ export const CardsOptions = styled.div`
   cursor: pointer;
 `;
 
-export const Carrito = styled(Cart)`
-  color: #d0fdd7;
-  width: 30px;
-  cursor: pointer;
-  margin-right: 10px;
-`;

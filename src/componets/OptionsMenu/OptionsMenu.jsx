@@ -1,71 +1,78 @@
+import React, { useState, useEffect } from "react";
 import {
-    ContainerMenus,
-    Navbar_Container,
-    CardsOptions,
-    ContainerCards,
-    Carrito,
-    LabelTitle,
-    CardsLabel
-  } from "./OptionsMenu.style";
-  import Desayunos from "../../assets/Desayunos";
-  import Comidas from "../../assets/Cenas";
-  import Cenas from "../../assets/Comidas";
-  import Bebidas from "../../assets/Bebidas";
-  import Postres from "../../assets/Postres";
-  
-  const categorias = ["Desayunos", "Comidas", "Cenas", "Postres", "Bebidas"];
-  
-  const images = [
-    {
-      id: 1,
-      title: "Desayunos",
-      imageUrl: <Desayunos width="100%" height="100%" />,
-    },
-    {
-      id: 2,
-      title: "Comidas",
-      imageUrl: <Comidas width="100%" height="100%" />,
-    },
-    {
-      id: 3,
-      title: "Cenas",
-      imageUrl: <Cenas width="100%" height="100%" />,
-    },
-    {
-      id: 4,
-      title: "Bebidas",
-      imageUrl: <Bebidas width="100%" height="100%" />,
-    },
-    {
-      id: 5,
-      title: "Postres",
-      imageUrl: <Postres width="100%" height="100%" />,
-    },
-  ];
-  
-  const getCategoryImage = (category) => {
-    const image = images.find((img) => img.title === category);
-    return image ? image.imageUrl : null;
-  };
-  
-  const OptionsMenu = () => {
-    return (
-      <ContainerMenus>
-        <Navbar_Container>
-          <LabelTitle> NombreRestaurante</LabelTitle>
-          <Carrito/>
-        </Navbar_Container>
-        <ContainerCards>
-          {categorias.map((categoria, index) => (
+  ContainerMenus,
+  CardsOptions,
+  ContainerCards,
+  CardsLabel,
+} from "./OptionsMenu.style";
+import { Link } from "react-router-dom";
+import Desayunos from "../../assets/Desayunos";
+import Comidas from "../../assets/Cenas";
+import Cenas from "../../assets/Comidas";
+import Bebidas from "../../assets/Bebidas";
+import Postres from "../../assets/Postres";
+import axios from "axios";
+import NavBar from "../NavBar/Navbar";
+
+const images = [
+  {
+    id: 1,
+    title: "Desayunos",
+    imageUrl: <Desayunos width="100%" height="100%" />,
+  },
+  {
+    id: 2,
+    title: "Comidas",
+    imageUrl: <Comidas width="100%" height="100%" />,
+  },
+  {
+    id: 3,
+    title: "Cenas",
+    imageUrl: <Cenas width="100%" height="100%" />,
+  },
+  {
+    id: 4,
+    title: "Bebidas",
+    imageUrl: <Bebidas width="100%" height="100%" />,
+  },
+  {
+    id: 5,
+    title: "Postres",
+    imageUrl: <Postres width="100%" height="100%" />,
+  },
+];
+
+const getCategoryImage = (category) => {
+  const image = images.find((img) => img.title === category);
+  return image ? image.imageUrl : null;
+};
+
+const OptionsMenu = () => {
+  const [tipoMenu, setTipoMenu] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios("http://localhost:3000/tipo_menu");
+      setTipoMenu(result.data);
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <ContainerMenus>
+      <NavBar />
+      <ContainerCards>
+        {tipoMenu.map((menu, index) => (
+          <Link to={`/${menu.nombre_tipo_menu}`} key={index}>
             <CardsOptions className="card" key={index}>
-              {getCategoryImage(categoria)}
-              <CardsLabel>{categoria}</CardsLabel>
+              {getCategoryImage(menu.nombre_tipo_menu)}
+              <CardsLabel>{menu.nombre_tipo_menu}</CardsLabel>
             </CardsOptions>
-          ))}
-        </ContainerCards>
-      </ContainerMenus>
-    );
-  };
-  
-  export default OptionsMenu;
-  
+          </Link>
+        ))}
+      </ContainerCards>
+    </ContainerMenus>
+  );
+};
+
+export default OptionsMenu;
