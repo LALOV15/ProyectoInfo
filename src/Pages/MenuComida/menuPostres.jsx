@@ -10,12 +10,12 @@ import {
   Label_Desc,
   ButtonAdd,
   ObtText,
-  Label_Title,
+  Label_Title
 } from "./menucomida.style";
 import axios from "axios";
 import Contador from "../../componets/Counter/counter";
 
-const MenuComida = () => {
+const MenuPostres = () => {
   const [platillo, setPlatillo] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const MenuComida = () => {
       try {
         const result = await axios("http://localhost:3000/platillos");
         const filteredPlatillos = result.data.filter(
-          (item) => item.id_tipo_menu === 2
+          (item) => item.id_tipo_menu === 4
         );
         setPlatillo(filteredPlatillos);
       } catch (error) {
@@ -36,7 +36,7 @@ const MenuComida = () => {
   return (
     <Menu_Container>
       <NavBar />
-      <Label_Title>Comidas</Label_Title>
+      <Label_Title>Postres</Label_Title>
       {platillo.map((item) => (
         <ContainerCard>
           <ContainerMenu>
@@ -47,7 +47,7 @@ const MenuComida = () => {
             <Label_Desc>{item.descripcion_platillo}</Label_Desc>
           </ContainerMenu>
           <Contador />
-          <ObtText type="text" placeholder="Observaciones" />{" "}
+            <ObtText type="text" placeholder="Observaciones" />{" "}
           <ButtonAdd>Agregar</ButtonAdd>
         </ContainerCard>
       ))}
@@ -55,4 +55,4 @@ const MenuComida = () => {
   );
 };
 
-export default MenuComida;
+export default MenuPostres;

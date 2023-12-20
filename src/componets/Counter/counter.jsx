@@ -22,9 +22,9 @@ const Contador = () => {
   return (
     <ContainerCounter>
       <ContainerButtons>
-        <AddIcon onClick={incrementar} />
-        <Counter>{contador}</Counter>
         <LessIcon onClick={decrementar} />
+        <Counter>{contador}</Counter>
+        <AddIcon onClick={incrementar} />
       </ContainerButtons>
     </ContainerCounter>
   );

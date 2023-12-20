@@ -33,6 +33,19 @@ app.get("/platillos", async (req, res) => {
   }
 });
 
+app.get("/orden", async (req, res) => {
+  try {
+    const orden = await pool.query(
+      "SELECT * FROM  orden"
+    );
+    res.json(orden.rows);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Unable to fetch products" });
+  }
+});
+
+
 app.listen(3000, () => {
    console.log("Server is running on port 3000");
  });
