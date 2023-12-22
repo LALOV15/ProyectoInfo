@@ -14,6 +14,13 @@ const RoutesComponent = () => {
 
   const addToCart = async (item, cantidad, observaciones) => {
     try {
+      const newCart = {
+        ...item,
+        nombre_platillo: item.nombre_platillo,
+        descripcion_platillo: item.descripcion_platillo,
+        cantidad: cantidad,
+        observaciones: observaciones,
+      };
       const newCartItem = {
         id_platillo: item.id_platillo,
         cantidad,
@@ -26,8 +33,13 @@ const RoutesComponent = () => {
         newCartItem
       );
 
-      // Agregar el nuevo item al carrito local
-      setCarrito([...carrito, response.data.linea_pedido]);
+      const combinedCartItem = {
+        ...response.data.linea_pedido[0],
+        ...newCart,
+      };
+
+      // Aquí, accedemos directamente a la línea de pedido recibida del servidor
+      setCarrito((prevState) => [...prevState, combinedCartItem]);
     } catch (error) {
       console.error("Error al agregar al carrito:", error);
     }

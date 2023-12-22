@@ -61,7 +61,6 @@ const MenuComida = ({ addToCart }) => {
             type="text"
             placeholder="Observaciones"
             onChange={(e) => {
-              // Capturar las observaciones y almacenarlas en el estado
               setObservaciones(e.target.value);
             }}
           />

@@ -21,24 +21,26 @@ import axios from "axios";
 const Carrito = ({ carrito, removeFromCart }) => {
   const enviarOrden = async () => {
     try {
-      // Aquí debemos realizar la lógica para enviar la orden al servidor
-      // Supongamos que tenemos el ID de mesa y el ID de línea de pedido
-      const idMesa = 1; // Coloca el ID de la mesa aquí
-      const idLineaPedido = carrito[0].id_linea_pedido
-      ; 
-
-      const response = await axios.post("http://localhost:3000/enviar_orden", {
-        id_mesa: idMesa,
-        id_linea_pedido: idLineaPedido,
+      // Aquí asumimos que queremos enviar la orden con todos los elementos del carrito
+      const promises = carrito.map(async (item) => {
+        const response = await axios.post(
+          "http://localhost:3000/enviar_orden",
+          {
+            id_linea_pedido: item.id_linea_pedido,
+            id_mesa: 2, // Esto debería ser dinámico, no estático
+          }
+        );
+        return response.data;
       });
 
-      console.log(response.data); // Debes manejar la respuesta del servidor según sea necesario
+      const orderResponses = await Promise.all(promises);
+      console.log(orderResponses);
+
+      // Una vez enviada la orden, podrías limpiar el carrito
     } catch (error) {
       console.error("Error al enviar la orden:", error);
     }
-    console.log({carrito})
   };
-
   return (
     <div>
       <NavBar />
@@ -49,15 +51,9 @@ const Carrito = ({ carrito, removeFromCart }) => {
           </Link>
           <label>Orden</label>
         </ContainerHeader>
-
         {carrito && carrito.length > 0 ? (
           carrito.map((item) => (
-            <Carrito_Item key={item.id}>
-              {/* Asegúrate de que los datos se muestren correctamente */}
-              <Carrito_Img
-                src={item.imagen_platillo}
-                alt={item.nombre_platillo}
-              />
+            <Carrito_Item key={item.id_linea_pedido}>
               <Carrito_Text>
                 <Carrito_Nombre>{item.nombre_platillo}</Carrito_Nombre>
                 <Carrito_Precio>{item.precio}</Carrito_Precio>
@@ -77,7 +73,6 @@ const Carrito = ({ carrito, removeFromCart }) => {
           </ConteinerNADD>
         )}
       </Carrito_Container>
-      {/* Botón para enviar la orden */}
       {carrito && carrito.length > 0 && (
         <EnviarOrdenButton onClick={enviarOrden}>
           Enviar Orden
