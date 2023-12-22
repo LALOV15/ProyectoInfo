@@ -16,10 +16,27 @@ import {
 } from "./Carrito.style";
 import NavBar from "../NavBar/Navbar";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Carrito = ({ carrito, removeFromCart }) => {
-  const enviarOrden = () => {
-    console.log("Orden enviada:", carrito); // Ejemplo: solo imprimimos la orden en la consola
+  const enviarOrden = async () => {
+    try {
+      // Aquí debemos realizar la lógica para enviar la orden al servidor
+      // Supongamos que tenemos el ID de mesa y el ID de línea de pedido
+      const idMesa = 1; // Coloca el ID de la mesa aquí
+      const idLineaPedido = carrito[0].id_linea_pedido
+      ; 
+
+      const response = await axios.post("http://localhost:3000/enviar_orden", {
+        id_mesa: idMesa,
+        id_linea_pedido: idLineaPedido,
+      });
+
+      console.log(response.data); // Debes manejar la respuesta del servidor según sea necesario
+    } catch (error) {
+      console.error("Error al enviar la orden:", error);
+    }
+    console.log({carrito})
   };
 
   return (
