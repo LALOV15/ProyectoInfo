@@ -6,23 +6,39 @@ import MenuDesayunos from "./Pages/MenuComida/menuDesayunos";
 import MenuCenas from "./Pages/MenuComida/menuCenas";
 import MenuPostres from "./Pages/MenuComida/menuPostres";
 import MenuBebidas from "./Pages/MenuComida/menuBebidas";
-import NavBar from "../src/componets/NavBar/Navbar";
 import Carrito from "../src/componets/Carrito/Carrito";
+import axios from "axios";
 
 const RoutesComponent = () => {
   const [carrito, setCarrito] = useState([]);
 
-  const addToCart = (item, cantidadSeleccionada, observaciones) => {
-    const newItem = { ...item, cantidad: cantidadSeleccionada, observaciones };
-    setCarrito([...carrito, newItem]);
+  const addToCart = async (item, cantidad, observaciones) => {
+    try {
+      const newCartItem = {
+        id_platillo: item.id_platillo,
+        cantidad,
+        monto: item.precio * cantidad,
+        observaciones,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3000/agregar_al_carrito",
+        newCartItem
+      );
+
+      // Agregar el nuevo item al carrito local
+      setCarrito([...carrito, response.data.linea_pedido]);
+    } catch (error) {
+      console.error("Error al agregar al carrito:", error);
+    }
   };
+
+  console.log({ carrito });
 
   const removeFromCart = (itemToRemove) => {
     const updatedCart = carrito.filter((item) => item.id !== itemToRemove.id);
     setCarrito(updatedCart);
   };
-
-  console.log({carrito})
 
   return (
     <Router>
@@ -46,7 +62,7 @@ const RoutesComponent = () => {
           path="/Carrito"
           element={
             <Carrito carrito={carrito} removeFromCart={removeFromCart} />
-          } 
+          }
         />
       </Routes>
     </Router>

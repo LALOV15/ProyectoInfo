@@ -38,7 +38,6 @@ const MenuComida = ({ addToCart }) => {
     fetchData();
   }, []);
 
- 
 
   return (
     <Menu_Container>
@@ -67,13 +66,7 @@ const MenuComida = ({ addToCart }) => {
             }}
           />
           <ButtonAdd
-            onClick={() =>
-              addToCart(
-                item,
-                cantidadSeleccionada,
-                observaciones
-              )
-            }
+            onClick={() => addToCart(item, cantidadSeleccionada, observaciones)}
           >
             Agregar
           </ButtonAdd>

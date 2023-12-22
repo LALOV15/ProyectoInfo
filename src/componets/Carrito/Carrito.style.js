@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { CartPlus } from "@styled-icons/fa-solid/CartPlus";
+import { ChevronBackCircle } from "@styled-icons/ionicons-outline/ChevronBackCircle";
 
 export const Carrito_Container = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -77,4 +79,31 @@ export const Carrito_Icon = styled(CartPlus)`
   color: black;
   width: 60px;
   margin-right: 10px;
+`;
+
+export const EnviarOrdenButton = styled.button`
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px auto; /* Centro horizontalmente el botón */
+  display: block;
+`;
+
+export const BackIcon = styled(ChevronBackCircle)`
+  color: black;
+  width: 20px;
+  margin-right: 10px;
+`;
+
+export const ContainerHeader = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 `;
