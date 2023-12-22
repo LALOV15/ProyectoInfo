@@ -1,4 +1,7 @@
+// MenuComida.js
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Contador from "../../componets/Counter/counter";
 import NavBar from "../../componets/NavBar/Navbar";
 import {
   Menu_Container,
@@ -10,13 +13,14 @@ import {
   Label_Desc,
   ButtonAdd,
   ObtText,
-  Label_Title
+  Label_Title,
 } from "./menucomida.style";
-import axios from "axios";
-import Contador from "../../componets/Counter/counter";
 
-const MenuCenas = () => {
+const MenuComida = ({ addToCart }) => {
   const [platillo, setPlatillo] = useState([]);
+  const [carrito, setCarrito] = useState([]);
+  const [cantidadSeleccionada, setCantidadSeleccionada] = useState(0);
+  const [observaciones, setObservaciones] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,12 +37,15 @@ const MenuCenas = () => {
 
     fetchData();
   }, []);
+
+ 
+
   return (
     <Menu_Container>
       <NavBar />
       <Label_Title>Cenas</Label_Title>
       {platillo.map((item) => (
-        <ContainerCard>
+        <ContainerCard key={item.id}>
           <ContainerMenu>
             <Container_Nombre_Precio>
               <Label_Nombre>{item.nombre_platillo}</Label_Nombre>
@@ -46,13 +53,34 @@ const MenuCenas = () => {
             </Container_Nombre_Precio>
             <Label_Desc>{item.descripcion_platillo}</Label_Desc>
           </ContainerMenu>
-          <Contador />
-            <ObtText type="text" placeholder="Observaciones" />{" "}
-          <ButtonAdd>Agregar</ButtonAdd>
+          <Contador
+            onCountChange={(cantidad) => {
+              setCantidadSeleccionada(cantidad);
+            }}
+          />
+          <ObtText
+            type="text"
+            placeholder="Observaciones"
+            onChange={(e) => {
+              // Capturar las observaciones y almacenarlas en el estado
+              setObservaciones(e.target.value);
+            }}
+          />
+          <ButtonAdd
+            onClick={() =>
+              addToCart(
+                item,
+                cantidadSeleccionada,
+                observaciones
+              )
+            }
+          >
+            Agregar
+          </ButtonAdd>
         </ContainerCard>
       ))}
     </Menu_Container>
   );
 };
 
-export default MenuCenas;
+export default MenuComida;

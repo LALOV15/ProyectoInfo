@@ -79,6 +79,7 @@ export const ButtonAdd = styled.label`
   text-align: center;
   padding:3px;
   box-shadow: 1px 1px 1px 1px grey;
+  cursor:pointer;
 `;
 
 export const ObtText = styled.input`

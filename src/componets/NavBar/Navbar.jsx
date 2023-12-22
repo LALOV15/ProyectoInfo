@@ -8,7 +8,9 @@ const NavBar = () => {
       <Link to="/">
         <LabelTitle> Soft-Food Demo</LabelTitle>
       </Link>
-      <Carrito />
+      <Link to="/Carrito">
+        <Carrito />
+      </Link>
     </Navbar_Container>
   );
 };

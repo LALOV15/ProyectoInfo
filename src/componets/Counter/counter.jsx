@@ -7,18 +7,23 @@ import {
   Counter,
 } from "./counter.style";
 
-const Contador = () => {
+const Contador = ({ onCountChange }) => {
   const [contador, setContador] = useState(0);
 
   const incrementar = () => {
-    setContador(contador + 1);
+    const newCount = contador + 1;
+    setContador(newCount);
+    onCountChange(newCount);
   };
 
   const decrementar = () => {
     if (contador > 0) {
-      setContador(contador - 1);
+      const newCount = contador - 1;
+      setContador(newCount);
+      onCountChange(newCount);
     }
   };
+
   return (
     <ContainerCounter>
       <ContainerButtons>
